@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHADOW PROTOCOL</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-logo">
+        <span class="logo-shadow">SHADOW</span>
+        <span class="logo-protocol">PROTOCOL</span>
+        <div class="logo-sub">GHOST DIVISION — CLASSIFIED</div>
+      </div>
+      <div class="loading-bar-container">
+        <div class="loading-bar" id="loading-bar"></div>
+        <div class="loading-text" id="loading-text">INITIALIZING SYSTEMS...</div>
+      </div>
+      <div class="loading-tip" id="loading-tip">Aegis Industries AI network: ACTIVE</div>
+    </div>
+    <div class="scan-line"></div>
+  </div>
+
+  <div id="main-menu" class="hidden">
+    <div class="menu-bg-overlay"></div>
+    <div class="cinematic-bars top"></div>
+    <div class="cinematic-bars bottom"></div>
+    <div class="menu-logo">
+      <div class="menu-logo-shadow">SHADOW</div>
+      <div class="menu-logo-protocol">PROTOCOL</div>
+      <div class="menu-logo-tag">2042 · CLASSIFIED OPERATION · GHOST DIVISION</div>
+    </div>
+    <div class="main-menu-buttons">
+      <button class="menu-btn primary" id="btn-campaign">
+        <span class="btn-icon">▶</span> CAMPAIGN
+      </button>
+      <button class="menu-btn" id="btn-loadgame">
+        <span class="btn-icon">◈</span> LOAD GAME
+      </button>
+      <button class="menu-btn" id="btn-skilltree">
+        <span class="btn-icon">◆</span> SKILL TREE
+      </button>
+      <button class="menu-btn" id="btn-loadout">
+        <span class="btn-icon">◉</span> WEAPON LOADOUT
+      </button>
+      <button class="menu-btn locked" id="btn-multiplayer">
+        <span class="btn-icon">⊕</span> MULTIPLAYER <span class="coming-soon">COMING SOON</span>
+      </button>
+      <button class="menu-btn locked" id="btn-coop">
+        <span class="btn-icon">⊕</span> CO-OP <span class="coming-soon">COMING SOON</span>
+      </button>
+      <button class="menu-btn locked" id="btn-extraction">
+        <span class="btn-icon">⊕</span> EXTRACTION <span class="coming-soon">COMING SOON</span>
+      </button>
+      <button class="menu-btn locked" id="btn-zombies">
+        <span class="btn-icon">⊕</span> SURVIVAL MODE <span class="coming-soon">COMING SOON</span>
+      </button>
+    </div>
+    <div class="menu-player-info" id="menu-player-info">
+      <div class="player-rank">RANK: <span id="menu-rank">01</span></div>
+      <div class="player-xp">XP: <span id="menu-xp">0</span></div>
+      <div class="player-name">CPT. MARCUS REED</div>
+    </div>
+    <div class="menu-version">v1.0.0 · EARLY ACCESS</div>
+  </div>
+
+  <div id="campaign-menu" class="hidden">
+    <div class="campaign-header">
+      <button class="back-btn" id="back-from-campaign">← BACK</button>
+      <div class="campaign-title">CAMPAIGN — OPERATION SHADOW PROTOCOL</div>
+      <div class="campaign-subtitle">GHOST DIVISION CLASSIFIED DOSSIER</div>
+    </div>
+    <div class="campaign-story">
+      <div class="story-text">
+        2042. Aegis Industries has developed ARES — an AI military network capable of seizing control of global defense infrastructure.
+        CEO Adrian Voss plans to trigger a world war that Aegis will profit from.
+        <strong>Ghost Division's mission: Neutralize ARES. Stop Voss.</strong>
+      </div>
+    </div>
+    <div class="chapter-grid" id="chapter-grid"></div>
+    <div class="campaign-squad">
+      <div class="squad-title">GHOST DIVISION ROSTER</div>
+      <div class="squad-roster">
+        <div class="squad-member">
+          <div class="squad-portrait marcus"></div>
+          <div class="squad-info"><div class="squad-name">CPT. MARCUS REED</div><div class="squad-role">PLAYER / LEADER</div></div>
+        </div>
+        <div class="squad-member">
+          <div class="squad-portrait sarah"></div>
+          <div class="squad-info"><div class="squad-name">SGT. SARAH KIM</div><div class="squad-role">INTELLIGENCE</div></div>
+        </div>
+        <div class="squad-member">
+          <div class="squad-portrait viktor"></div>
+          <div class="squad-info"><div class="squad-name">CPL. VIKTOR VOLKOV</div><div class="squad-role">HEAVY WEAPONS</div></div>
+        </div>
+        <div class="squad-member">
+          <div class="squad-portrait ahmed"></div>
+          <div class="squad-info"><div class="squad-name">SPC. AHMED HASSAN</div><div class="squad-role">DRONE EXPERT</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="skill-tree-menu" class="hidden">
+    <div class="campaign-header">
+      <button class="back-btn" id="back-from-skills">← BACK</button>
+      <div class="campaign-title">SKILL TREE — GHOST DIVISION</div>
+      <div class="skill-points-display">SKILL POINTS: <span id="skill-points-available">0</span></div>
+    </div>
+    <div class="skill-tree-container" id="skill-tree-container"></div>
+  </div>
+
+  <div id="loadout-menu" class="hidden">
+    <div class="campaign-header">
+      <button class="back-btn" id="back-from-loadout">← BACK</button>
+      <div class="campaign-title">WEAPON LOADOUT</div>
+    </div>
+    <div class="loadout-container" id="loadout-container"></div>
+  </div>
+
+  <div id="game-canvas-container" class="hidden">
+    <canvas id="game-canvas"></canvas>
+    <div id="hud">
+      <div id="hud-top">
+        <div id="hud-objective">
+          <div class="obj-label">OBJECTIVE</div>
+          <div class="obj-text" id="obj-text">—</div>
+        </div>
+        <div id="hud-chapter">
+          <div class="chapter-name" id="chapter-name">—</div>
+        </div>
+        <div id="hud-timer" class="hidden">
+          <div class="timer-label">TIME</div>
+          <div class="timer-val" id="timer-val">00:00</div>
+        </div>
+      </div>
+      <div id="hud-center">
+        <div id="crosshair">
+          <div class="ch-line ch-top"></div>
+          <div class="ch-line ch-bottom"></div>
+          <div class="ch-line ch-left"></div>
+          <div class="ch-line ch-right"></div>
+          <div class="ch-dot"></div>
+        </div>
+        <div id="hit-marker" class="hidden">✕</div>
+        <div id="headshot-marker" class="hidden">★</div>
+      </div>
+      <div id="hud-bottom">
+        <div id="hud-health">
+          <div class="stat-label">HEALTH</div>
+          <div class="health-bar-outer">
+            <div class="health-bar-inner" id="health-bar"></div>
+          </div>
+          <div class="stat-val" id="health-val">100</div>
+        </div>
+        <div id="hud-armor">
+          <div class="stat-label">ARMOR</div>
+          <div class="armor-bar-outer">
+            <div class="armor-bar-inner" id="armor-bar"></div>
+          </div>
+          <div class="stat-val" id="armor-val">50</div>
+        </div>
+        <div id="hud-weapon">
+          <div class="weapon-name" id="weapon-name">AR-12</div>
+          <div class="ammo-display">
+            <span class="ammo-mag" id="ammo-mag">30</span>
+            <span class="ammo-sep">/</span>
+            <span class="ammo-reserve" id="ammo-reserve">120</span>
+          </div>
+          <div class="weapon-mode" id="weapon-mode">AUTO</div>
+        </div>
+        <div id="hud-equipment">
+          <div class="equip-item" id="equip-grenade">
+            <div class="equip-icon">💣</div>
+            <div class="equip-count" id="grenade-count">3</div>
+          </div>
+          <div class="equip-item" id="equip-smoke">
+            <div class="equip-icon">💨</div>
+            <div class="equip-count" id="smoke-count">2</div>
+          </div>
+          <div class="equip-item" id="equip-drone">
+            <div class="equip-icon">🚁</div>
+            <div class="equip-count" id="drone-count">1</div>
+          </div>
+        </div>
+      </div>
+      <div id="hud-stealth" class="hidden">
+        <div class="stealth-label">STEALTH</div>
+        <div class="stealth-bar-outer">
+          <div class="stealth-bar-inner" id="stealth-bar"></div>
+        </div>
+        <div class="stealth-status" id="stealth-status">HIDDEN</div>
+      </div>
+      <div id="damage-vignette"></div>
+      <div id="low-health-pulse" class="hidden"></div>
+      <div id="stealth-overlay" class="hidden"></div>
+      <div id="interaction-prompt" class="hidden">
+        <span class="interact-key">[E]</span> <span id="interact-text">Interact</span>
+      </div>
+      <div id="squad-comms" class="hidden">
+        <div class="comm-portrait" id="comm-portrait"></div>
+        <div class="comm-text" id="comm-text"></div>
+      </div>
+      <div id="hacking-ui" class="hidden">
+        <div class="hack-title">HACKING TERMINAL</div>
+        <div class="hack-bar-outer">
+          <div class="hack-bar-inner" id="hack-bar"></div>
+        </div>
+        <div class="hack-status" id="hack-status">HOLD E TO HACK</div>
+        <div class="hack-pct" id="hack-pct">0%</div>
+      </div>
+      <div id="xp-popup" class="hidden"></div>
+      <div id="radar">
+        <canvas id="radar-canvas" width="120" height="120"></canvas>
+        <div class="radar-label">RADAR</div>
+      </div>
+      <div id="weapon-switch-ui" class="hidden">
+        <div class="ws-slots" id="ws-slots"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="mission-complete-screen" class="hidden">
+    <div class="mc-content">
+      <div class="mc-header">MISSION COMPLETE</div>
+      <div class="mc-chapter" id="mc-chapter">Chapter 1: The Attack</div>
+      <div class="mc-stats">
+        <div class="mc-stat"><span class="ms-label">KILLS</span><span class="ms-val" id="mc-kills">0</span></div>
+        <div class="mc-stat"><span class="ms-label">HEADSHOTS</span><span class="ms-val" id="mc-headshots">0</span></div>
+        <div class="mc-stat"><span class="ms-label">STEALTH KILLS</span><span class="ms-val" id="mc-stealth">0</span></div>
+        <div class="mc-stat"><span class="ms-label">XP EARNED</span><span class="ms-val xp-val" id="mc-xp">+0</span></div>
+        <div class="mc-stat"><span class="ms-label">TIME</span><span class="ms-val" id="mc-time">00:00</span></div>
+        <div class="mc-stat"><span class="ms-label">RATING</span><span class="ms-val gold" id="mc-rating">S</span></div>
+      </div>
+      <div class="mc-xp-bar-container">
+        <div class="mc-level-text">LEVEL <span id="mc-level">1</span></div>
+        <div class="mc-xp-bar-outer">
+          <div class="mc-xp-bar-inner" id="mc-xp-bar"></div>
+        </div>
+        <div class="mc-xp-text"><span id="mc-xp-cur">0</span> / <span id="mc-xp-next">1000</span> XP</div>
+      </div>
+      <div class="mc-unlocks" id="mc-unlocks"></div>
+      <div class="mc-buttons">
+        <button class="menu-btn primary" id="mc-continue">CONTINUE →</button>
+        <button class="menu-btn" id="mc-replay">REPLAY MISSION</button>
+        <button class="menu-btn" id="mc-main-menu">MAIN MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="death-screen" class="hidden">
+    <div class="death-content">
+      <div class="death-header">KIA</div>
+      <div class="death-sub">CAPTAIN REED HAS FALLEN</div>
+      <div class="death-quote" id="death-quote">"No retreat. No surrender." — Ghost Division Motto</div>
+      <div class="death-buttons">
+        <button class="menu-btn primary" id="death-retry">RETRY MISSION</button>
+        <button class="menu-btn" id="death-menu">MAIN MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="pause-menu" class="hidden">
+    <div class="pause-content">
+      <div class="pause-title">PAUSED</div>
+      <button class="menu-btn primary" id="pause-resume">RESUME</button>
+      <button class="menu-btn" id="pause-restart">RESTART MISSION</button>
+      <button class="menu-btn" id="pause-main">MAIN MENU</button>
+    </div>
+  </div>
+
+  <div id="cinematic-intro" class="hidden">
+    <div class="cinematic-bars top"></div>
+    <div class="cinematic-bars bottom"></div>
+    <div class="intro-text-container">
+      <div class="intro-text" id="intro-text"></div>
+      <div class="intro-skip">PRESS ENTER TO SKIP</div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="src/core/SaveSystem.js"></script>
+  <script src="src/core/InputManager.js"></script>
+  <script src="src/core/AssetManager.js"></script>
+  <script src="src/audio/AudioManager.js"></script>
+  <script src="src/effects/ParticleSystem.js"></script>
+  <script src="src/effects/EffectsManager.js"></script>
+  <script src="src/player/SkillTree.js"></script>
+  <script src="src/player/WeaponSystem.js"></script>
+  <script src="src/player/Player.js"></script>
+  <script src="src/enemies/AIController.js"></script>
+  <script src="src/enemies/Enemy.js"></script>
+  <script src="src/enemies/EnemyManager.js"></script>
+  <script src="src/squad/SquadManager.js"></script>
+  <script src="src/world/LevelBuilder.js"></script>
+  <script src="src/world/MapManager.js"></script>
+  <script src="src/missions/MissionManager.js"></script>
+  <script src="src/missions/Chapter1_Attack.js"></script>
+  <script src="src/missions/Chapter2_Informant.js"></script>
+  <script src="src/ui/UIManager.js"></script>
+  <script src="src/core/SceneManager.js"></script>
+  <script src="src/core/Game.js"></script>
+  <script src="src/main.js"></script>
+</body>
+</html>
